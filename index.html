@@ -85,6 +85,7 @@
       margin: 1.25rem 0 2rem;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 0.75rem 1.25rem;
     }
 
@@ -123,7 +124,7 @@
       font-family: "Source Serif 4", Georgia, serif;
       font-size: 1.35rem;
       font-weight: 600;
-      text-align: center;
+      text-align: left;
       margin: 2.5rem 0 1rem;
       padding-top: 0.5rem;
       border-top: 1px solid var(--rule);
@@ -169,6 +170,10 @@
       text-align: left;
       font-weight: 600;
       background: rgba(215, 205, 244, 1);
+    }
+
+    table.demo thead tr th:first-child {
+      width: 250px;
     }
 
     table.demo td.query {
@@ -219,6 +224,19 @@
       left: 0;
     }
 
+    table.demo.equal-cols {
+      table-layout: fixed;
+    }
+
+    table.demo.equal-cols th,
+    table.demo.equal-cols td {
+      width: auto;
+    }
+
+    table.demo.equal-cols thead tr th:first-child {
+      width: auto;
+    }
+
     footer {
       margin-top: 2rem;
       font-size: 0.85rem;
@@ -236,7 +254,6 @@
 
       <nav class="links" aria-label="Paper resources">
         <a href="#">Paper</a>
-        <a href="#">Code</a>
       </nav>
     </header>
 
@@ -248,12 +265,18 @@
     <div id="audio-demos">
       <h2>Timbre Transfer</h2>
       <div class="table-scroll">
-      <table class="demo">
+      <table class="demo equal-cols">
+      <colgroup>
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+      </colgroup>
       <thead>
       <tr>
       <th scope="col">Example</th>
       <th scope="col">Guide Signal</th>
-      <th scope="col">Output </th>
+      <th scope="col">Ours </th>
       <th scope="col">Prior work</th>
       </tr>
       </thead>
@@ -301,13 +324,13 @@
       </div>
       </td>
       <td>
-      <span style="color: var(--muted);">—</span>
+      <span style="color: var(--muted);">Wavetransfer [1]</span>
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/TimbreTransfer/String2Clarinet/WT16_BDDM20.wav" type="audio/wav">
       </audio>
       </div>
-      <span style="color: var(--muted);">—</span>
+      <span style="color: var(--muted);">DiffTransfer [2]</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -338,7 +361,7 @@
       </div>
       </td>
       <td>
-      <span style="color: var(--muted);">—</span>
+      <span style="color: var(--muted);">Diff Mutual Information [3]</span>
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/TimbreTransfer/Synth2Violin/mutualInformation_k_0.6_clamp_0.3_norm.mp3" type="audio/wav">
@@ -367,7 +390,7 @@
       </div>
       </td>
       <td>
-      <span style="color: var(--muted);">—</span>
+      <span style="color: var(--muted);">Latent DiffBridge [4]</span>
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/TimbreTransfer/Violin2Flute/Latent_diffbridge_generated_flute_from_violin_time_4_channel_0.wav" type="audio/wav">
@@ -422,9 +445,86 @@
       </tbody>
       </table>
       </div>
+      <h3 class="subsection">Effect of $\tau_\text{init}$</h3>
+      <div class="table-scroll">
+      <table class="demo equal-cols">
+      <colgroup>
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+      </colgroup>
+      <thead>
+      <tr>
+      <th scope="col">Guide signal</th>
+      <th scope="col">$\tau_\text{init}$ = 0.55</th>
+      <th scope="col">$\tau_\text{init}$ = 0.70</th>
+      <th scope="col">$\tau_\text{init}$ = 0.80</th>
+      <th scope="col">$\tau_\text{init}$ = 0.85</th>
+      <th scope="col">$\tau_\text{init}$ = 0.90</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/TimbreTransfer/Oboe2Piano/input_audio_snippet_Fantasy%20in%20C.wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      <td>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/TimbreTransfer/Oboe2Piano/output_t0.55.wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      <td>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/TimbreTransfer/Oboe2Piano/output_t0.70.wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      <td>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/TimbreTransfer/Oboe2Piano/output_t0.80.wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      <td>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/TimbreTransfer/Oboe2Piano/output_t0.85.wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      <td>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/TimbreTransfer/Oboe2Piano/output_t0.90.wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      </tr>
+      </tbody>
+      </table>
+      </div>
       <h3 class="subsection">Effect of the noise</h3>
       <div class="table-scroll">
-      <table class="demo">
+      <table class="demo equal-cols">
+      <colgroup>
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+        <col style="width: 16.6667%;">
+      </colgroup>
       <thead>
       <tr>
       <th scope="col">Guide signal</th>
@@ -483,25 +583,32 @@
       </tbody>
       </table>
       </div>
+
       <h2>Midi to Real</h2>
       <div class="table-scroll">
-      <table class="demo">
+      <table class="demo equal-cols">
+      <colgroup>
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+        <col style="width: 25%;">
+      </colgroup>
       <thead>
       <tr>
       <th scope="col">Example</th>
-      <th scope="col">Input (+ other)</th>
-      <th scope="col">Output (+ more)</th>
+      <th scope="col">MIDI input</th>
+      <th scope="col">Ours</th>
       <th scope="col">Prior work</th>
       </tr>
       </thead>
       <tbody>
       <tr>
-      <td class="query">20260224_134620</td>
+      <td class="query"> French Horn</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_134620/input_audio_snippet_24_piano.wav" type="audio/wav">
+      <source src="assets/audio/Midi2Real/FrenchHorn/input_audio_snippet_midi-french%20horn.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -510,36 +617,87 @@
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_134620/output_t0.80.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_134620/output_t0.70.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_134620/output_t0.75.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_134620/output_t0.85.wav" type="audio/wav">
+      <source src="assets/audio/Midi2Real/FrenchHorn/output_t0.85.wav" type="audio/wav">
       </audio>
       </div>
       </div>
       </td>
-      <td><span style="color: var(--muted);">—</span></td>
+      <td>
+      <span style="color: var(--muted);">CoSaRef (SDEdit) [5]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef%20(SDEdit).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);">CoSaRef (Zeta) [5]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef(Zeta).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);">midi-ddsp [6]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/midi-ddsp-french%20horn.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       </tr>
       <tr>
-      <td class="query">20260224_140656</td>
+      <td class="query">Violin</td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/Violin/input_audio_snippet_2_MidiSynthFreelyAvailable.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/Violin/output_t0.70.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
+      <td>
+      <span style="color: var(--muted);">DDSP (Heuristic) [7]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/Violin/2_DDSP(Heuristic).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);">Midi2Params (Aligned) [7]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/Violin/2_DDSP(midi2params_aligned).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);">Midi2Params (Transcribed) [7]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/Violin/2_DDSP(midi2params_trasncribed).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
+      </tr>
+      <tr>
+      <td class="query">Piano 1</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
@@ -553,27 +711,6 @@
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_140656/output_t0.80.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_140656/output_t0.70.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_140656/output_t0.75.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
       <source src="assets/audio/Midi2Real/20260224_140656/output_t0.85.wav" type="audio/wav">
       </audio>
       </div>
@@ -582,7 +719,7 @@
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">20260224_145849</td>
+      <td class="query">Piano 2</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
@@ -600,65 +737,16 @@
       </audio>
       </div>
       </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_145849/output_t0.70.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_145849/output_t0.75.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/20260224_145849/output_t0.85.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
       </td>
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">FrenchHorn</td>
+      <td class="query">Piano 3</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/input_audio_snippet_midi-french%20horn.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef%20(SDEdit).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef(Zeta).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/midi-ddsp-french%20horn.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/midi-french%20horn.wav" type="audio/wav">
+      <source src="assets/audio/Midi2Real/20260224_134620/input_audio_snippet_24_piano.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -667,80 +755,39 @@
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/output_t0.85.wav" type="audio/wav">
+      <source src="assets/audio/Midi2Real/20260224_134620/output_t0.85.wav" type="audio/wav">
       </audio>
       </div>
       </div>
       </td>
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
-      <tr>
-      <td class="query">Violin</td>
-      <td>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/Violin/input_audio_snippet_2_MidiSynthFreelyAvailable.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/Violin/2_DDSP(Heuristic).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/Violin/2_DDSP(midi2params_aligned).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/Violin/2_DDSP(midi2params_trasncribed).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/Violin/2_MidiSynthFreelyAvailable.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      </td>
-      <td>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/Violin/output_t0.70.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      </td>
-      <td><span style="color: var(--muted);">—</span></td>
-      </tr>
+      
       </tbody>
       </table>
       </div>
       <h2>Audio Enhancement</h2>
       <div class="table-scroll">
-      <table class="demo">
+      <table class="demo equal-cols">
+      <colgroup>
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+      </colgroup>
       <thead>
       <tr>
       <th scope="col">Example</th>
-      <th scope="col">Input (+ other)</th>
-      <th scope="col">Output (+ more)</th>
+      <th scope="col">Input </th>
+      <th scope="col">Ours</th>
       <th scope="col">Prior work</th>
+      <th scope="col">Ground truth</th>
       </tr>
       </thead>
       <tbody>
       <tr>
-      <td class="query">GuitarRecordingEnhancement</td>
+      <td class="query">Guitar w/ background conversation</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
@@ -754,80 +801,25 @@
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.80.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
       <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/guitar_output_t0.85.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.50.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.55.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.60.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.65.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.70.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.75.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.90.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/output_t0.95.wav" type="audio/wav">
       </audio>
       </div>
       </div>
       </td>
       <td><span style="color: var(--muted);">—</span></td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/GuitarRecordingEnhancement/guitar_no_noise.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       </tr>
       <tr>
       <td class="query">Trumpet</td>
       <td>
-      <span style="color: var(--muted);">—</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -844,13 +836,10 @@
       </audio>
       </div>
       </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/Trumpet/val_sample_1901_demucs.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
+      </td>
+      <td>
+
+      <span style="color: var(--muted);">Mel2Mel DiffWave [8]</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -858,6 +847,7 @@
       </audio>
       </div>
       </div>
+      <span style="color: var(--muted);">Mel2Mel GL [8]</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -865,11 +855,27 @@
       </audio>
       </div>
       </div>
+      <span style="color: var(--muted);">Demucs [9]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/Trumpet/val_sample_1901_demucs.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
       </td>
-      <td><span style="color: var(--muted);">—</span></td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/Trumpet/val_sample_1901_clean.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       </tr>
       <tr>
-      <td class="query">birds chirping</td>
+      <td class="query">Birds chirping</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
@@ -878,20 +884,7 @@
       </audio>
       </div>
       </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/birds%20chirping/706817_1648170-hq_16k.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/birds%20chirping/birds_chirping(SeparateAnythingYouDescribe).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
+      
       </td>
       <td>
       <div style="margin-top:0.35rem;">
@@ -902,36 +895,24 @@
       </div>
       </div>
       </td>
-      <td><span style="color: var(--muted);">—</span></td>
+      <td><span style="color: var(--muted);">AudioSep [10]</span>
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/birds%20chirping/birds_chirping(SeparateAnythingYouDescribe).wav" type="audio/wav">
+      </audio>
+      </div>
+      </td>
+      <td>
+      <span style="color: var(--muted);">—</span>
+      </td>
       </tr>
       <tr>
-      <td class="query">declipping/10db</td>
+      <td class="query">Declipping - 10 dB</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/Enhancing/declipping/10db/input_audio_snippet_MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/declipping/10db/aspade%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/declipping/10db/cqtdiff%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/declipping/10db/sspew%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -945,36 +926,41 @@
       </div>
       </div>
       </td>
+      <td>
+      <span style="color: var(--muted);"> aspade [11]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/declipping/10db/aspade%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);"> cqtdiff [12]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/declipping/10db/cqtdiff%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);"> ss-pew [13]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/declipping/10db/sspew%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">declipping/1db</td>
+      <td class="query">Declipping - 1 dB</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/Enhancing/declipping/1db/input_audio_snippet_MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/declipping/1db/aspade%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/declipping/1db/cqtdiff%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/declipping/1db/sspew%20-%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -988,22 +974,41 @@
       </div>
       </div>
       </td>
+      <td>
+      <span style="color: var(--muted);"> a-spade [11]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/declipping/1db/aspade%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);"> cqtdiff [12]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/declipping/1db/cqtdiff%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);"> ss-pew [13]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/declipping/1db/sspew%20-%20MIDI-Unprocessed_10_R1_2006_01-04_ORIG_MID--AUDIO_10_R1_2006_03_Track03_wav.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">keyboard typing</td>
+      <td class="query">Keyboard typing</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/Enhancing/keyboard%20typing/input_audio_snippet_exp302_keyboard%20typing_mixture.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/keyboard%20typing/683332_8872754-hq_16k.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -1016,30 +1021,36 @@
       </audio>
       </div>
       </div>
+
+      </td>
+      <td>
+        <span style="color: var(--muted);">AudioSep [10]</span>
+        <div style="margin-top:0.35rem;">
+          <div class="audio-cell">
+          <audio controls preload="metadata">
+          <source src="assets/audio/Enhancing/keyboard%20typing/exp302_keyboard%20typing_output(SeparateAnythingYouNeed).wav" type="audio/wav">
+          </audio>
+          </div>
+          </div>
+      </td>
+      <td>
+      
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/keyboard%20typing/exp302_keyboard%20typing_output(SeparateAnythingYouNeed).wav" type="audio/wav">
+      <source src="assets/audio/Enhancing/keyboard%20typing/exp302_keyboard%20typing_target((SeparateAnythingYouNeed).wav" type="audio/wav">
       </audio>
       </div>
       </div>
       </td>
-      <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">water drops</td>
+      <td class="query">Water drops</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/Enhancing/water%20drops/exp31_water%20drops_mixture.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Enhancing/water%20drops/input_audio_snippet_exp31_water%20drops_mixture.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -1052,6 +1063,9 @@
       </audio>
       </div>
       </div>
+      </td>
+      <td>
+      <span style="color: var(--muted);">AudioSep [10]</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -1060,20 +1074,36 @@
       </div>
       </div>
       </td>
-      <td><span style="color: var(--muted);">—</span></td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Enhancing/water%20drops/exp31_water%20drops_target(SeparateAnythingYouCan).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       </tr>
       </tbody>
       </table>
       </div>
       <h2>Limitations</h2>
       <div class="table-scroll">
-      <table class="demo">
+      <table class="demo equal-cols">
+      <colgroup>
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+        <col style="width: 20%;">
+      </colgroup>
       <thead>
       <tr>
       <th scope="col">Example</th>
-      <th scope="col">Input (+ other)</th>
-      <th scope="col">Output (+ more)</th>
+      <th scope="col">Input </th>
+      <th scope="col">Ours</th>
       <th scope="col">Prior work</th>
+      <th scope="col">Ground truth</th>
       </tr>
       </thead>
       <tbody>
@@ -1098,21 +1128,15 @@
       </div>
       </td>
       <td><span style="color: var(--muted);">—</span></td>
+      <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">Sketch2Sound</td>
+      <td class="query">Sketch to Sound</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/Limitations/Sketch2Sound/input_audio_snippet_car%20racing.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/Sketch2Sound/sketch2sound_out.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -1125,10 +1149,13 @@
       </audio>
       </div>
       </div>
+      </td>
+      <td>
+      <span style="color: var(--muted);"> Sketch2sound [14]</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/Sketch2Sound/output_t0.75_lambda_1.wav" type="audio/wav">
+      <source src="assets/audio/Limitations/Sketch2Sound/sketch2sound_out.wav" type="audio/wav">
       </audio>
       </div>
       </div>
@@ -1136,7 +1163,7 @@
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">StemSeparation/Flute and Guitar</td>
+      <td class="query">Stem Separation<br>Flute and Guitar</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
@@ -1147,20 +1174,7 @@
       </div>
       </td>
       <td>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/StemSeparation/Flute%20and%20Guitar/flute_output_t0.80.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/StemSeparation/Flute%20and%20Guitar/acoustic%20guitar_output(Separate%20anythingyou%20describe).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
+      <span style="color: var(--muted);"> Guitar</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -1168,11 +1182,30 @@
       </audio>
       </div>
       </div>
+      <span style="color: var(--muted);"> Flute</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Limitations/StemSeparation/Flute%20and%20Guitar/flute_output_t0.80.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+
+      </td>
+      <td>
+      <span style="color: var(--muted);"> Guitar AudioSep [10]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Limitations/StemSeparation/Flute%20and%20Guitar/acoustic%20guitar_output(Separate%20anythingyou%20describe).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
       </td>
       <td><span style="color: var(--muted);">—</span></td>
       </tr>
       <tr>
-      <td class="query">StemSeparation/Guitar and Drums</td>
+      <td class="query">Stem Separation<br>Guitar and Drums</td>
       <td>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
@@ -1181,29 +1214,9 @@
       </audio>
       </div>
       </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/StemSeparation/Guitar%20and%20Drums/GuitarAndDrums.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/StemSeparation/Guitar%20and%20Drums/drums.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Limitations/StemSeparation/Guitar%20and%20Drums/other.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
       </td>
       <td>
+      <span style="color: var(--muted);"> Drums</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -1211,6 +1224,7 @@
       </audio>
       </div>
       </div>
+      <span style="color: var(--muted);"> Guitar</span>
       <div style="margin-top:0.35rem;">
       <div class="audio-cell">
       <audio controls preload="metadata">
@@ -1220,6 +1234,24 @@
       </div>
       </td>
       <td><span style="color: var(--muted);">—</span></td>
+      <td>
+      <span style="color: var(--muted);"> Drums</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Limitations/StemSeparation/Guitar%20and%20Drums/drums.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);"> Guitar</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Limitations/StemSeparation/Guitar%20and%20Drums/other.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
       </tr>
       </tbody>
       </table>
@@ -1230,9 +1262,74 @@
       <h2>References</h2>
       <ol class="references-list">
         <li>
+          T. Baoueb, X. Bie, H. Janati, and G. Richard,
+          “Wavetransfer: A flexible end-to-end multi-instrument timbre transfer with diffusion,”
+          <em>arXiv preprint</em> arXiv:2409.15321, 2024.
+        </li>
+        <li>
+          L. Comanducci, F. Antonacci, and A. Sarti,
+          “Timbre transfer using image-to-image denoising diffusion implicit models,”
+          in <em>Proc. ISMIR</em>, 2023.
+        </li>
+        <li>
           C. H. Lee, J. Nistal, S. Lattner, M. Pasini, and G. Fazekas,
-          "Diffusion timbre transfer via mutual information guided inpainting,"
-          arXiv preprint arXiv:2601.01294, 2026.
+          “Diffusion timbre transfer via mutual information guided inpainting,”
+          <em>arXiv preprint</em> arXiv:2601.01294, 2026.
+        </li>
+        <li>
+          M. Mancusi, Y. Halychanskyi, K. W. Cheuk, E. Moliner, C.-H. Lai, S. Uhlich, J. Koo,
+          M. A. Martínez-Ramírez, W.-H. Liao, G. Fabbro, and Y. Mitsufuji,
+          “Latent diffusion bridges for unsupervised musical audio timbre transfer,”
+          <em>arXiv preprint</em> arXiv:2409.06096, 2025.
+        </li>
+        <li>
+          O. Take and T. Akama,
+          “Annotation-free midi-to-audio synthesis via concatenative synthesis and generative refinement,”
+          <em>arXiv preprint</em> arXiv:2410.16785, 2025.
+        </li>
+        <li>
+          Y. Wu, E. Manilow, Y. Deng, R. S. Swavely, K. Kastner, T. Cooijmans, A. Courville, C.-Z. A. Huang, and J. Engel,
+          “Midi-ddsp: Detailed control of musical performance via hierarchical modeling,”
+          <em>arXiv preprint</em> arXiv:2112.09312, 2022.
+        </li>
+        <li>
+          R. Castellon, C. Donahue, and P. Liang,
+          “Towards realistic MIDI instrument synthesizers,”
+          in <em>Proceedings of the NeurIPS Workshop on Machine Learning for Creativity and Design</em>, 2020.
+        </li>
+        <li>
+          N. Kandpal, O. Nieto, and Z. Jin,
+          “Music enhancement via image translation and vocoding,”
+          <em>arXiv preprint</em> arXiv:2204.13289, 2022.
+        </li>
+        <li>
+          A. Defossez, G. Synnaeve, and Y. Adi,
+          “Real time speech enhancement in the waveform domain,”
+          <em>Interspeech</em>, 2020.
+        </li>
+        <li>
+          X. Liu, Q. Kong, Y. Zhao, H. Liu, Y. Yuan, Y. Liu, R. Xia, Y. Wang, M. D. Plumbley, and W. Wang,
+          “Separate Anything You Describe (AudioSep),”
+        </li>
+        <li>
+          S. Kitić, N. Bertin, and R. Gribonval,
+          “Sparsity and cosparsity for audio declipping: A flexible non-convex approach,”
+          in <em>Proc. Int. Conf. Latent Variable Analysis Signal Separation</em>, Aug. 2015, pp. 243–250.
+        </li>
+        <li>
+          E. Moliner, J. Lehtinen, and V. Välimäki,
+          “Solving audio inverse problems with a diffusion model,”
+          <em>arXiv preprint</em> arXiv:2210.15228, 2022.
+        </li>
+        <li>
+          K. Siedenburg, M. Kowalski, and M. Dörfler,
+          “Audio declipping with social sparsity,”
+          in <em>Proc. IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP)</em>, May 2014, pp. 1577–1581.
+        </li>
+        <li>
+          H. F. Garcia, O. Nieto, J. Salamon, B. Pardo, and P. Seetharaman,
+          “Sketch2sound: Controllable audio generation via time-varying signals and sonic limitations,”
+          <em>arXiv preprint</em> arXiv:2412.08550, 2025.
         </li>
         <!-- Add more references as new <li> entries -->
       </ol>
