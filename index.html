@@ -259,7 +259,7 @@
 
     <h2>Abstract</h2>
     <p class="lede">
-      In this paper, we investigate how diffusion warm initialization can be used as a simple yet effective approach for a range of audio-to-audio transformation tasks. To illustrate the generality of the approach, we demonstrate its use in Timbre Transfer, MIDI-to-Real synthesis, and multiple Audio Enhancement tasks. We conduct a detailed empirical analysis on timbre transfer to investigate the role of the initialization time $\tau_\text{init}$. The effect of $\tau_\text{init}$ is evaluated using pitch-based Jaccard Distance and Fréchet Audio Distance to quantify faithfulness to the input signal and alignment with the target distribution.  Our results provide practical guidance for selecting $\tau_\text{init}$ and show that, once properly chosen, a single pretrained diffusion model combined with warm initialization can support multiple transformation objectives without task-specific training or conditioning. Despite its simplicity, this approach already achieves competitive results when compared with more complex pipelines designed specifically for these tasks. We further observe that warm initialization does not necessarily require explicit noise injection, as the guide signal itself can often serve as a valid initialization state for the backward diffusion process. Together, these findings show that warm initialization provides a simple and effective framework that serves as a fundamental building block for more complex audio transformation pipelines.
+      In this paper, we propose diffusion warm initialization as a simple yet effective approach for a range of audio-to-audio transformation tasks. To illustrate the generality of the approach, we demonstrate its use in timbre transfer, MIDI-to-Real synthesis, and multiple audio enhancement tasks. We conduct a detailed empirical analysis on timbre transfer to investigate the role of the initialization time $t_\text{init}$. The effect of $t_\text{init}$ is evaluated using pitch-based Jaccard Distance and Fréchet Audio Distance to quantify faithfulness to the input signal and alignment with the target distribution.  Our results provide practical guidance for selecting $t_\text{init}$ and show that, once properly chosen, a single pretrained diffusion model combined with warm initialization can support multiple transformation objectives without task-specific training or conditioning. Despite its simplicity, this approach already achieves competitive results when compared with more complex pipelines designed specifically for these tasks. We further observe that warm initialization does not necessarily require explicit noise injection, as the guide signal itself can often serve as a valid initialization state for the backward diffusion process. Together, these findings show that warm initialization provides a simple and effective framework that serves as a fundamental building block for more complex audio transformation pipelines.
     </p>
 
     <div id="audio-demos">
@@ -603,53 +603,6 @@
       </thead>
       <tbody>
       <tr>
-      <td class="query"> French Horn</td>
-      <td>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/input_audio_snippet_midi-french%20horn.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      </td>
-      <td>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/output_t0.85.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      </td>
-      <td>
-      <span style="color: var(--muted);">CoSaRef (SDEdit) [5]</span>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef%20(SDEdit).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <span style="color: var(--muted);">CoSaRef (Zeta) [5]</span>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef(Zeta).wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      <span style="color: var(--muted);">midi-ddsp [6]</span>
-      <div style="margin-top:0.35rem;">
-      <div class="audio-cell">
-      <audio controls preload="metadata">
-      <source src="assets/audio/Midi2Real/FrenchHorn/midi-ddsp-french%20horn.wav" type="audio/wav">
-      </audio>
-      </div>
-      </div>
-      </td>
-      </tr>
-      <tr>
       <td class="query">Violin</td>
       <td>
       <div style="margin-top:0.35rem;">
@@ -691,6 +644,53 @@
       <div class="audio-cell">
       <audio controls preload="metadata">
       <source src="assets/audio/Midi2Real/Violin/2_DDSP(midi2params_trasncribed).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
+      </tr>
+      <tr>
+      <td class="query"> French Horn</td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/input_audio_snippet_midi-french%20horn.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
+      <td>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/output_t0.85.wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      </td>
+      <td>
+      <span style="color: var(--muted);">CoSaRef (SDEdit) [5]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef%20(SDEdit).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);">CoSaRef (Zeta) [5]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/CoSaRef(Zeta).wav" type="audio/wav">
+      </audio>
+      </div>
+      </div>
+      <span style="color: var(--muted);">midi-ddsp [6]</span>
+      <div style="margin-top:0.35rem;">
+      <div class="audio-cell">
+      <audio controls preload="metadata">
+      <source src="assets/audio/Midi2Real/FrenchHorn/midi-ddsp-french%20horn.wav" type="audio/wav">
       </audio>
       </div>
       </div>
